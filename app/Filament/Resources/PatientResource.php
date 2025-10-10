@@ -17,6 +17,7 @@ use Illuminate\Database\Eloquent\Builder;
 use App\Filament\Resources\PatientResource\Pages;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Filament\Resources\PatientResource\RelationManagers;
+use App\Filament\Resources\PatientResource\RelationManagers\TreatmentsRelationManager;
 
 class PatientResource extends Resource
 {
@@ -72,6 +73,7 @@ class PatientResource extends Resource
                     ->sortable(),
                 TextColumn::make('type'),
                 TextColumn::make('date_of_birth')
+                    ->dateTime('d M, Y')
                     ->sortable(),
                 TextColumn::make('owner.name')
                     ->searchable(),
@@ -82,7 +84,9 @@ class PatientResource extends Resource
                         'cat' => 'Cat',
                         'dog' => 'Dog',
                         'rabbit' => 'Rabbit'
-                    ])
+                    ]),
+                SelectFilter::make('owner')
+                    ->relationship('owner', 'name')
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
@@ -97,7 +101,7 @@ class PatientResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+            TreatmentsRelationManager::class,
         ];
     }
 
