@@ -17,7 +17,16 @@ class OwnerResource extends Resource
 {
     protected static ?string $model = Owner::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    // protected static ?string $modelLabel = 'Pemilik';
+
+    // protected static ?string $pluralModelLabel = 'Pemilik';
+
+    // protected static bool $hasTitleCaseModelLabel = false;
+    protected static ?string $navigationGroup = 'Data';
+
+    protected static ?string $navigationLabel = 'Owners';
+
+    protected static ?string $navigationIcon = 'heroicon-o-users';
 
     public static function form(Form $form): Form
     {
@@ -61,7 +70,7 @@ class OwnerResource extends Resource
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
-                Tables\Filters\TrashedFilter::make(),
+                // Tables\Filters\TrashedFilter::make(),
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
