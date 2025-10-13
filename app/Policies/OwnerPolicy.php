@@ -29,7 +29,7 @@ class OwnerPolicy
      */
     public function create(User $user): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -37,7 +37,7 @@ class OwnerPolicy
      */
     public function update(User $user, Owner $owner): bool
     {
-        return false;
+        return true;
     }
 
     /**
