@@ -34,38 +34,10 @@ class PatientResource extends Resource
     {
         return $form
             ->schema([
-                TextInput::make('name')
-                    ->required()
-                    ->maxLength(255),
-                Select::make('type')
-                    ->options([
-                        'cat' => 'Cat',
-                        'dog' => 'Dog',
-                        'rabbit' => 'Rabbit'
-                    ])
-                    ->required(),
-                DatePicker::make('date_of_birth')
-                    ->required()
-                    ->maxDate(now()),
-                Select::make('owner_id')
-                    ->relationship('owner', 'name')
-                    ->searchable()
-                    ->preload()
-                    ->createOptionForm([
-                        TextInput::make('name')
-                            ->required()
-                            ->maxLength(255),
-                        TextInput::make('email')
-                            ->label('Email Address')
-                            ->email()
-                            ->required()
-                            ->maxLength(255),
-                        TextInput::make('phone')
-                            ->label('Phone Number')
-                            ->tel()
-                            ->required(),
-                    ])
-                    ->required()
+                static::getNameFormField(),
+                static::getDateFormField(),
+                static::getTypeFormField(),
+                static::getOwnerFormField(),
             ]);
     }
 
@@ -117,5 +89,53 @@ class PatientResource extends Resource
             'create' => Pages\CreatePatient::route('/create'),
             'edit' => Pages\EditPatient::route('/{record}/edit'),
         ];
+    }
+
+    public static function getNameFormField(): Forms\Components\TextInput
+    {
+        return TextInput::make('name')
+            ->required()
+            ->maxLength(255);
+    }
+
+    public static function getTypeFormField(): Forms\Components\Select
+    {
+        return Select::make('type')
+            ->options([
+                'cat' => 'Cat',
+                'dog' => 'Dog',
+                'rabbit' => 'Rabbit'
+            ])
+            ->required();
+    }
+
+    public static function getDateFormField(): Forms\Components\DatePicker
+    {
+        return DatePicker::make('date_of_birth')
+            ->required()
+            ->maxDate(now());
+    }
+
+    public static function getOwnerFormField(): Forms\Components\Select
+    {
+        return Select::make('owner_id')
+            ->relationship('owner', 'name')
+            ->searchable()
+            ->preload()
+            ->createOptionForm([
+                TextInput::make('name')
+                    ->required()
+                    ->maxLength(255),
+                TextInput::make('email')
+                    ->label('Email Address')
+                    ->email()
+                    ->required()
+                    ->maxLength(255),
+                TextInput::make('phone')
+                    ->label('Phone Number')
+                    ->tel()
+                    ->required(),
+            ])
+            ->required();
     }
 }

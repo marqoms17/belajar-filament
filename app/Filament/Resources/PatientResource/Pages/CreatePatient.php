@@ -21,49 +21,22 @@ class CreatePatient extends CreateRecord
             Step::make('Name')
                 ->description('Give pet name')
                 ->schema([
-                    TextInput::make('name')
-                        ->required()
-                        ->maxLength(255),
+                    PatientResource::getNameFormField(),
                 ]),
             Step::make('Type')
                 ->description('Give pet type')
                 ->schema([
-                    Select::make('type')
-                        ->options([
-                            'cat' => 'Cat',
-                            'dog' => 'Dog',
-                            'rabbit' => 'Rabbit'
-                        ])
-                        ->required(),
+                    PatientResource::getTypeFormField(),
                 ]),
             Step::make('Date of Birth')
                 ->description('Give pet Date of Birth')
                 ->schema([
-                    DatePicker::make('date_of_birth')
-                        ->required()
-                        ->maxDate(now()),
+                    PatientResource::getDateFormField()
                 ]),
             Step::make('Owner')
                 ->description('Choose patient owner')
                 ->schema([
-                    Select::make('owner_id')
-                        ->relationship('owner', 'name')
-                        ->searchable()
-                        ->preload()
-                        ->createOptionForm([
-                            TextInput::make('name')
-                                ->required()
-                                ->maxLength(255),
-                            TextInput::make('email')
-                                ->label('Email Address')
-                                ->email()
-                                ->required()
-                                ->maxLength(255),
-                            TextInput::make('phone')
-                                ->label('Phone Number')
-                                ->tel()
-                                ->required(),
-                        ])
+                    PatientResource::getOwnerFormField(),
                 ]),
         ];
     }
